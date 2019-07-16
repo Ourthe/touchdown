@@ -1,9 +1,12 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Juego.gd" type="Script" id=1]
+[ext_resource path="res://src/Juego.gd" type="Script" id=1]
 [ext_resource path="res://assets/maps/city.png" type="Texture" id=2]
-[ext_resource path="res://player.gd" type="Script" id=3]
+[ext_resource path="res://src/player.gd" type="Script" id=3]
 [ext_resource path="res://assets/characters/player.png" type="Texture" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 28.413, 57.3699 )
 
 [node name="Juego" type="Node2D"]
 script = ExtResource( 1 )
@@ -22,7 +25,14 @@ scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 4 )
 centered = false
 
+[node name="vulnerable" type="Area2D" parent="player"]
+
+[node name="hitbox" type="CollisionShape2D" parent="player/vulnerable"]
+position = Vector2( 126.461, 301.645 )
+shape = SubResource( 1 )
+
 [node name="spawn" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 4.0
 autostart = true
+[connection signal="body_entered" from="player/vulnerable" to="player" method="_on_vulnerable_body_entered"]
 [connection signal="timeout" from="spawn" to="." method="_on_spawn_timeout"]

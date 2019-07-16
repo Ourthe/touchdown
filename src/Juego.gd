@@ -29,7 +29,9 @@ func add_alien():
 	var alien = preload("res://game_objects/alien.tscn").instance()
 	add_child(alien)
 	alien.position = Vector2(400,-50)
-	move_in_perspective_y(alien, 40*int(rand_range(0,3)))
+	var sector = int(rand_range(0,3))
+	alien.add_to_group("sector"+str(sector))
+	move_in_perspective_y(alien, 40*sector)
 	
 func _on_spawn_timeout():
 	add_alien()

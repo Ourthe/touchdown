@@ -4,7 +4,7 @@
 [ext_resource path="res://assets/objects/arrow.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 22.3307, 3.67648 )
+extents = Vector2( 4.3088, 3.67648 )
 
 [node name="arrow" type="KinematicBody2D"]
 script = ExtResource( 1 )
@@ -13,6 +13,14 @@ script = ExtResource( 1 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 2 )
 
-[node name="hitbox" type="CollisionShape2D" parent="."]
-position = Vector2( 10, 0 )
+[node name="head" type="Area2D" parent="."]
+
+[node name="hitbox" type="CollisionShape2D" parent="head"]
+position = Vector2( 26.8108, 0.0378246 )
 shape = SubResource( 1 )
+
+[node name="die_time" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+[connection signal="body_entered" from="head" to="." method="_on_head_body_entered"]
+[connection signal="timeout" from="die_time" to="." method="_on_die_time_timeout"]

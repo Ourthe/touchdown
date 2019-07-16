@@ -17,7 +17,13 @@ func _input(event):
 func throw_arrow(pos):
 	var arrow = preload("res://game_objects/arrow.tscn").instance()
 	arrow.position = Vector2(155, 300) + position
-	var dir = pos - pointer_pressed
+	var dir = pointer_pressed - pos
 	arrow.rotation = dir.angle()
 	arrow.apply_impulse(dir)
 	get_parent().add_child(arrow)
+
+func _on_vulnerable_body_entered(body):
+	var sector = int(position.y + 60)/40
+	if body.is_in_group("sector"+str(sector)):
+		print("moriste en sector " + str(sector))
+		get_tree().change_scene("res://scenes/game_over.tscn")
